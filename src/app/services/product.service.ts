@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from "rxjs";
+import { Observable, Subject, takeUntil } from "rxjs";
 import { IProduct } from "../models/product.interface";
+import { Store } from '@ngrx/store';
+import { IAppState } from '../store/state/app.state';
+import * as selector from '../store/selectors';
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +15,17 @@ export class ProductService {
     private apiUrl = environment.apiUrl;
     private accessToken: string | null = localStorage.getItem('access_token');
     private headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
+    private unsubscribe$ = new Subject<void>;
 
-
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(
+        private http: HttpClient,
+        private store: Store<IAppState>
+        ) {
+        this.store.select(selector.selectUserAccessToken).pipe(takeUntil(this.unsubscribe$)).subscribe((token) => {
+            this.accessToken = token;
+            this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.accessToken}`);
+        });
+     }
 
     private buildUrl(endpoint: string): string {
         return `${this.apiUrl}/product/${endpoint}`;

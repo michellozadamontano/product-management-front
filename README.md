@@ -13,3 +13,12 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Authentication
+
+There are two users to test the app:
+user : user
+pass : user
+
+user : admin
+pass : admin

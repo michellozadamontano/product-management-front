@@ -34,7 +34,7 @@ export class AuthCallbackComponent implements OnInit {
                 name: user.profile.name,
                 profile: user.profile.profile,
             }
-            this.store.dispatch(actions.loginAction({ user: userObj }));
+            this.store.dispatch(actions.loginAction({ user: userObj, access_token: user.access_token }));
             // save access_token in local storage
             localStorage.setItem('access_token', user.access_token);
             //redirect to home page

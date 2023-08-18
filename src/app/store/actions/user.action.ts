@@ -4,7 +4,7 @@ import { IUser } from 'src/app/models/user.interface';
 
 export const loginAction = createAction(
     '[App] Login',
-    props<{ user: IUser }>()
+    props<{ user: IUser, access_token: string }>()
 );
 
 export const LOGOUT         = '[App] Logout';

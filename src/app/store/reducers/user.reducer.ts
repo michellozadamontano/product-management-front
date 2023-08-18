@@ -8,7 +8,7 @@ import * as action from '../actions/user.action';
 
 export const userReducer = createReducer(
     initialUserState,
-    on(action.loginAction, (state, {user}) => ({ ...state, user: user, error: null, isLogged: true })),
+    on(action.loginAction, (state, {user, access_token}) => ({ ...state, user: user, access_token, error: null, isLogged: true })),
 );
 
 export function reducer(state: IUserState | undefined, action: Action) {
