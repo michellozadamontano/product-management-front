@@ -1,1 +1,11 @@
-<p>sidebar works!</p>
+<mat-list>
+    <mat-list-item routerLink="{{routes.DASHBOARD}}" routerLinkActive="active" class="cursor-pointer">
+        <mat-icon>home</mat-icon> Dashboard
+    </mat-list-item>
+    <mat-list-item routerLink="{{routes.CATEGORIES}}" routerLinkActive="active" class="cursor-pointer">
+        <mat-icon>category</mat-icon> Categories
+    </mat-list-item>
+    <mat-list-item routerLink="{{routes.PRODUCTS}}" routerLinkActive="active" class="cursor-pointer">
+        <mat-icon>inventory</mat-icon> Products
+    </mat-list-item>
+</mat-list>

@@ -1,0 +1,35 @@
+<div class="container p-3">
+
+    <div class="h-full flex flex-col justify-center">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-col justify-items-center w-full">
+                <mat-form-field class="w-1/2">
+                    <mat-label>Category</mat-label>
+                    <mat-select [formControl]="categoryId">
+                        <mat-option *ngFor="let cat of categoriesList" [value]="cat.id">{{cat.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 flex justify-center">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="name" id="name">
+                </mat-form-field>
+                <mat-form-field class="w-1/2">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" id="description"
+                        placeholder="Enter description"></textarea>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 flex justify-center">
+                    <mat-label>Price</mat-label>
+                    <input matInput placeholder="Price" formControlName="price" id="price" type="number">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 flex justify-center">
+                    <mat-label>Qty</mat-label>
+                    <input matInput placeholder="Quantity" formControlName="quantity" id="quantity" type="number">
+                </mat-form-field>
+
+                <button type="submit" mat-raised-button color="primary" [disabled]="!productForm.valid" class="w-1/2">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+

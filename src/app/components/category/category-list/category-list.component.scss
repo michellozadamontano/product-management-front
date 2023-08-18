@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+  td {
+    word-break: break-all;
+  }
+  .mat-cell {
+    padding: 8px 8px 8px 12px;
+  }
+  .mat-header-cell {
+    padding: 8px 8px 8px 12px;
+  }
+}
+.spinner-margin {
+    margin: 0 10px;
+  }

@@ -1,1 +1,34 @@
-<p>header works!</p>
+<mat-toolbar class="header">
+
+    <div class="header__title">
+        <button class="header__title-button" mat-mini-fab (click)="openMenu()">
+            <mat-icon *ngIf="!isMenuOpened" class="header__title-button-icon">menu</mat-icon>
+            <mat-icon *ngIf="isMenuOpened" class="header__title-button-icon">arrow_back</mat-icon>
+        </button>
+        <h6 class="header__title-text">Product Management</h6>
+    </div>
+
+    <div class="header-toolbar" *ngIf="isLogged$ |async">
+        <p>Welcome back {{(user$ |async)!.name}}</p>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon class="header-toolbar__icon">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon class="header-toolbar__icon">account_circle</mat-icon>
+                <span>Profile</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon class="header-toolbar__icon">settings</mat-icon>
+                <span>Settings</span>
+            </button>
+            <button mat-menu-item (click)="signOut()">
+                <mat-icon class="header-toolbar__icon">exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    </div>
+    <div class="header-toolbar" *ngIf="!(isLogged$ |async)">
+        <button mat-button (click)="login()" routerLinkActive="router-link-active" >Login</button>
+    </div>
+</mat-toolbar>

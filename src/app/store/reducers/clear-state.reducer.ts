@@ -1,12 +1,9 @@
-import {
-    Action,
-    ActionReducer
-}                   from '@ngrx/store';
-import { LOGOUT }   from '../actions/user.actions';
+import {ActionReducer} from '@ngrx/store';
+import {LOGOUT} from '../actions/user.action';
 //-------------------------------------------------------------------------------------
 // Imports State
 //-------------------------------------------------------------------------------------
-import { IAppState } from '../state/app.state';
+import {IAppState} from '../state/app.state';
 //-------------------------------------------------------------------------------------
 export const clearStateMetaReducer = (
     reducer: ActionReducer<IAppState>
@@ -15,8 +12,7 @@ export const clearStateMetaReducer = (
       if (action.type === LOGOUT) {
         state = undefined;
       }
-      const nextState = reducer(state, action);
-     // localStorage.setItem("state", JSON.stringify(nextState));
-      return nextState;
+      // localStorage.setItem("state", JSON.stringify(nextState));
+      return reducer(state, action);
     };
   };

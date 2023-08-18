@@ -1,0 +1,2 @@
+<mat-progress-spinner *ngIf="isLoading$ | async" class="spinner-margin"></mat-progress-spinner>
+<app-product-form [categories]="categories$ |async" (create_edit)="createProduct($event)"></app-product-form>

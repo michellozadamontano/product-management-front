@@ -6,11 +6,11 @@ import {
 //-------------------------------------------------------------------------------------
 // Imports State
 //-------------------------------------------------------------------------------------
-import { AppState }            from '../state/app.state';
+import { IAppState }            from '../state/app.state';
 
 export const hydrationMetaReducer = (
-  reducer: ActionReducer<AppState>
-): ActionReducer<AppState> => {
+  reducer: ActionReducer<IAppState>
+): ActionReducer<IAppState> => {
   return (state, action) => {
     if (action.type === INIT || action.type === UPDATE) {
       const storageValue = localStorage.getItem("state");

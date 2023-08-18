@@ -1,1 +1,39 @@
-<p>category-list works!</p>
+<div class="container p-3">
+    <mat-progress-spinner *ngIf="loading$ | async"
+        class="spinner-margin">
+    </mat-progress-spinner>
+    <div class="m-3">
+        <button mat-raised-button color="primary" routerLink="{{routes.CREATE_CATEGORY}}" [disabled]="(isUser() | async)">Add Category +</button>
+    </div>
+    <div class="h-full">
+        <table mat-table [dataSource]="categories$" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="mat-elevation-z8">
+            <!-- Id Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef  [hidden]="true"> Id </th>
+                <td mat-cell *matCellDef="let element" [hidden]="true"> {{element.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [routerLink]="['/home/categories/edit/', element?.id]" [disabled]="(isUser() | async)"  aria-label="edit">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="onDelete(element?.id)" [disabled]="(isUser() | async)"  aria-label="delete">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+    </div>
+</div>
