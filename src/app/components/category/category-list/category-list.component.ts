@@ -19,6 +19,7 @@ import {
     Subject,
     map,
     of,
+    takeUntil,
 
 } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
@@ -26,6 +27,9 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { routes } from 'src/app/const';
+import { ICategory, ITableCategory } from 'src/app/models/category.interface';
+
+
 
 @Component({
     selector: 'app-category-list',
@@ -52,7 +56,7 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
     //------------------------------------------------------------------------
     // Public Properties Section
     //------------------------------------------------------------------------
-    public categories$: Observable<any> = of([]);
+    public categories: ITableCategory[] = [];
     public loading$: Observable<boolean> = this.store.select(selector.selectCategoryLoading);
     public error$: Observable<string | null> = this.store.select(selector.selectCategoryError);
     public user$: Observable<any> = this.store.select(selector.selectUser);
@@ -72,7 +76,11 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     ngOnInit() {
         this.onLoadData();
-        this.categories$ = this.store.select(selector.selectCategories);
+        this.store.select(selector.selectCategories).pipe(takeUntil(this.unsubscribe$)).subscribe((categories: ICategory[]) => {
+            console.log('categories', categories);
+            console.log('formatCategories', this.formatCategories(categories));
+            this.categories = this.formatCategories(categories);
+        });
     }
     //------------------------------------------------------------------------
     ngOnDestroy(): void {
@@ -100,5 +108,25 @@ export class CategoryListComponent implements OnInit, OnDestroy, AfterViewInit {
         return this.user$.pipe(
             map((user: any) => user.profile === 'user')
         );
+    }
+    //------------------------------------------------------------------------
+    formatCategories(categories: ICategory[], path: string = ''): ITableCategory[] {
+        let formattedCategories: ITableCategory[] = [];
+
+        for (const category of categories) {
+            const newPath = path ? `${path} > ${category.name}` : category.name;
+            let tableCategory: ITableCategory = {
+                id: category.id,
+                name: newPath,
+                description: category.description
+            };
+            formattedCategories.push(tableCategory);
+
+            if (category.children && category.children.length > 0) {
+                formattedCategories.push(...this.formatCategories(category.children, newPath));
+            }
+        }
+
+        return formattedCategories;
     }
 }

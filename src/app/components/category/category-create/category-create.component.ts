@@ -33,6 +33,7 @@ import { CategoryFormComponent } from '../category-form/category-form.component'
 })
 export class CategoryCreateComponent {
     public categories$: Observable<any> = this.store.select(selector.selectCategories);
+    public isErrorCreate$ = this.store.select(selector.selectCategoryError);
 
     //------------------------------------------------------------------------
     // Constructor Method Section
@@ -56,7 +57,15 @@ export class CategoryCreateComponent {
         }
 
         this.store.dispatch(actions.createCategory({ data: category }));
-        this.toastr.success('Category created successfully');
-        this.router.navigate(['../'], { relativeTo: this.route });
+        // if no error, redirect to list
+        this.isErrorCreate$.subscribe((error: string | null) => {
+            if (!error) {
+                this.router.navigate(['../'], { relativeTo: this.route });
+            }
+            else {
+                this.toastr.error('There was an error creating category', 'Error');
+            }
+        });
+
     }
 }

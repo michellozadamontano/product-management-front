@@ -5,3 +5,8 @@ export interface ICategory {
   parentId?: number | null;
   children?: ICategory[];
 }
+export interface ITableCategory {
+    id: number;
+    name: string;
+    description: string;
+}

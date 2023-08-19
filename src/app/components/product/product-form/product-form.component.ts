@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ICategory } from 'src/app/models/category.interface';
+import { ICategory, ITableCategory } from 'src/app/models/category.interface';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -28,7 +28,7 @@ export class ProductFormComponent {
     //------------------------------------------------------------------------
     @Input() set categories(data: ICategory[] | null) {
         if (data) {
-            this.categoriesList = data;
+            this.categoriesList = this.formatCategories(data);
         }
     }
     @Input() set product(data: any | null) {
@@ -69,6 +69,26 @@ export class ProductFormComponent {
     //------------------------------------------------------------------------
     onSubmit(): void {
         this.create_edit.emit(this.productForm.value);
+    }
+    //------------------------------------------------------------------------
+    formatCategories(categories: ICategory[], path: string = ''): ITableCategory[] {
+        let formattedCategories: ITableCategory[] = [];
+
+        for (const category of categories) {
+            const newPath = path ? `${path} > ${category.name}` : category.name;
+            let tableCategory: ITableCategory = {
+                id: category.id,
+                name: newPath,
+                description: category.description
+            };
+            formattedCategories.push(tableCategory);
+
+            if (category.children && category.children.length > 0) {
+                formattedCategories.push(...this.formatCategories(category.children, newPath));
+            }
+        }
+
+        return formattedCategories;
     }
 
 }

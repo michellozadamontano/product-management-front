@@ -35,6 +35,7 @@ export class CategoryEditComponent implements OnInit {
     public categories$: Observable<any> = this.store.select(selector.selectCategories);
     public categoryId: number = this.route.snapshot.params['id'];
     public category$: Observable<any> = this.store.select(selector.selectSelectedCategory);
+    public isErrorCreate$ = this.store.select(selector.selectCategoryError);
 
     //------------------------------------------------------------------------
     // Constructor Method Section
@@ -61,7 +62,14 @@ export class CategoryEditComponent implements OnInit {
         }
 
         this.store.dispatch(actions.updateCategory({ data: category }));
-        this.toastr.success('Category updated successfully');
-        this.router.navigate(['/home/categories']);
+        // if no error, redirect to list
+        this.store.select(selector.selectCategoryError).subscribe((error: string | null) => {
+            if (!error) {
+                this.router.navigate(['/home/categories']);
+            }
+            else {
+                this.toastr.error('There was an error editing category', 'Error');
+            }
+        });
     }
 }

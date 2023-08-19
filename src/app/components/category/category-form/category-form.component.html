@@ -1,25 +1,25 @@
 <div class="container p-3">
 
-    <div class="h-full">
-        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="flex flex-col justify-center">
-            <div class="flex flex-col justify-items-center w-full">
-                <mat-form-field class="w-1/2 flex justify-center">
+    <div class="h-full flex justify-center">
+        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col items-center">
+            <div class="flex flex-col w-1/2 bg-slate-50 border-red-200">
+                <mat-form-field class="w-full">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Name" formControlName="name" id="name">
                 </mat-form-field>
-                <mat-form-field class="w-1/2">
+                <mat-form-field class="w-full">
                     <mat-label>Description</mat-label>
                     <textarea matInput formControlName="description" id="description"
                         placeholder="Enter description"></textarea>
                 </mat-form-field>
-                <mat-form-field class="w-1/2">
+                <mat-form-field class="w-full">
                     <mat-label>Parent</mat-label>
                     <mat-select [formControl]="parentId">
                         <mat-option *ngFor="let cat of categoriesList" [value]="cat.id">{{cat.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <button type="submit" mat-raised-button color="primary" [disabled]="!categoryForm.valid" class="w-1/2">Submit</button>
+                <button type="submit" mat-raised-button color="primary" [disabled]="!categoryForm.valid" class="w-full">Submit</button>
             </div>
 
         </form>

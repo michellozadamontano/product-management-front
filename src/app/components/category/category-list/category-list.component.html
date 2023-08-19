@@ -6,7 +6,7 @@
         <button mat-raised-button color="primary" routerLink="{{routes.CREATE_CATEGORY}}" [disabled]="(isUser() | async)">Add Category +</button>
     </div>
     <div class="h-full">
-        <table mat-table [dataSource]="categories$" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="mat-elevation-z8">
+        <table mat-table [dataSource]="categories" matSort matSortActive="created" matSortDisableClear matSortDirection="desc" class="mat-elevation-z8">
             <!-- Id Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef  [hidden]="true"> Id </th>
