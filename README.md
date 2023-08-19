@@ -16,9 +16,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Authentication
 
-There are two users to test the app:
+### There are two users to test the app
+## user
 user : user
 pass : user
 
+## admin
 user : admin
 pass : admin
